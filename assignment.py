@@ -6,6 +6,8 @@ from skrl.agents.torch.ppo import PPO
 
 # SKRL API: use model_instantiators directly
 from skrl.utils.model_instantiators.torch import deterministic_model, categorical_model
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
 
 # SKRL API change: wrap_env may be in different modules
 try:
@@ -53,7 +55,6 @@ def build_dqn_models(env):
     target_q_network.to(device)
     return {"q_network": q_network, "target_q_network": target_q_network}
 
-
 def build_ppo_models(env):
     """
     Create and return PPO models: categorical policy and value function.
@@ -80,11 +81,10 @@ def build_ppo_models(env):
         network=network,
         output="ONE",
     )
-    # Ensure networks are on the selected device
     policy.to(device)
     value_function.to(device)
-    return {"policy": policy, "value_function": value_function}
-
+    # **Use the key "value" here, not "value_function"**
+    return {"policy": policy, "value": value_function}
 
 def train_cartpole(algorithm_name, timesteps, seed):
     """
@@ -138,7 +138,7 @@ def train_cartpole(algorithm_name, timesteps, seed):
 if __name__ == "__main__":
     seeds = [0, 42, 123]
     timesteps_list = [500_000, 1_000_000, 2_000_000]
-    for algo in ["DQN", "PPO"]:
+    for algo in ["PPO"]:
         for ts in timesteps_list:
             for sd in seeds:
                 train_cartpole(algo, ts, sd)
