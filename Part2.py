@@ -248,7 +248,7 @@ def train_image_cartpole(
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    seeds = [0, 42, 123]
+    seeds = [42, 123]
     timesteps_list = [500_000, 1_000_000, 2_000_000]
     algorithms = ["DQN", "PPO"]  # run both DQN and PPO
 
