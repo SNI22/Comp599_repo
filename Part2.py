@@ -249,7 +249,7 @@ def train_image_cartpole(
 # ---------- Main ----------
 if __name__ == "__main__":
     seeds = [0, 42, 123]
-    timesteps_list = [500_000, 1_000_000, 2_000_000]
+    timesteps_list = [2_000_000, 1_000_000, 500_000]
     algorithms = ["DQN", "PPO"]  # run both DQN and PPO
 
     for enc_name, fn, dim in encoders:
