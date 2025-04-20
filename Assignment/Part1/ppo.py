@@ -111,8 +111,8 @@ def train_cartpole(algorithm_name, timesteps, seed):
         env.close()
 
 if __name__ == "__main__":
-    seeds = [0, 42, 123]
-    timesteps_list = [500_000, 1_000_000, 2_000_000]
+    seeds = [123]
+    timesteps_list = [2_000_000]
     
     for algo in ["PPO"]:
         for ts in timesteps_list:
