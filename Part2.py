@@ -97,7 +97,9 @@ def extract_clip(img):
 
 
 # DINOv2 encoder (if available)
-encoders = [("ResNet18", extract_resnet, 512), ("CLIP", extract_clip, 512)]
+# encoders = [("ResNet18", extract_resnet, 512), ("CLIP", extract_clip, 512)]
+encoders = [("CLIP", extract_clip, 512)]
+
 try:
     dino_model = timm.create_model("dino_vitbase16", pretrained=True)
     dino_model.head = torch.nn.Identity()
@@ -248,17 +250,13 @@ def train_image_cartpole(
 
 # ---------- Main ----------
 if __name__ == "__main__":
-<<<<<<< HEAD
     seeds = [0, 42, 123]
-    timesteps_list = [2_000_000, 1_000_000, 500_000]
-=======
-    seeds = [42, 123]
-    timesteps_list = [500_000, 1_000_000, 2_000_000]
->>>>>>> 688def5054242b961c093a4c2130c0575868c2cf
+    timesteps_list = [500_000,1_000_000, 2_000_000]  # 500k, 1M, 2M
     algorithms = ["DQN", "PPO"]  # run both DQN and PPO
 
-    for enc_name, fn, dim in encoders:
-        for algorithm in algorithms:
-            for ts in timesteps_list:
+   
+    for algorithm in algorithms: 
+        for ts in timesteps_list:
+            for enc_name, fn, dim in encoders:
                 for sd in seeds:
                     train_image_cartpole(enc_name, fn, dim, algorithm, ts, sd)
