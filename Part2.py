@@ -97,8 +97,8 @@ def extract_clip(img):
 
 
 # DINOv2 encoder (if available)
-encoders = [("ResNet18", extract_resnet, 512), ("CLIP", extract_clip, 512)]
-# encoders = [("CLIP", extract_clip, 512)]
+# encoders = [("ResNet18", extract_resnet, 512), ("CLIP", extract_clip, 512)]
+encoders = [("CLIP", extract_clip, 512)]
 
 try:
     dino_model = timm.create_model("dino_vitbase16", pretrained=True)
@@ -250,8 +250,8 @@ def train_image_cartpole(
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    seeds = [123]
-    timesteps_list = [1_000_000]  # 500k, 1M, 2M
+    seeds = [0,42,123]
+    timesteps_list = [2_000_000]  # 500k, 1M, 2M
     algorithms = ["DQN"]  # run both DQN and PPO
 
    
